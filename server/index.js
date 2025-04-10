@@ -5,22 +5,18 @@ require("dotenv").config();
 
 const app = express();
 
+// ✅ Manually add CORS headers to handle preflight and POST
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
   next();
 });
 
 app.use(bodyParser.json());
-
-app.options("/assess", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
-  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.sendStatus(204); // No Content
-});
-
 
 app.post("/assess", async (req, res) => {
   const { profile, answers } = req.body;
@@ -69,4 +65,4 @@ ${JSON.stringify(answers, null, 2)}
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
