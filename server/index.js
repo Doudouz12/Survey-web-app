@@ -1,11 +1,11 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
+app.use(express.json());
 
-// ✅ Handle CORS for all routes and all methods
+// ✅ CORS headers for all requests
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -15,8 +15,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-app.use(bodyParser.json());
 
 app.post("/assess", async (req, res) => {
   const { profile, answers } = req.body;
@@ -59,11 +57,13 @@ ${JSON.stringify(answers, null, 2)}
     const message = response.data.choices[0].message.content;
     res.json({ summary: message });
   } catch (error) {
-    console.error("Azure OpenAI error:", error.response?.data || error.message);
+    console.error("❌ Azure OpenAI error:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to get AI response." });
   }
 });
 
-// ✅ This port works with Azure Linux App Services
+// ✅ Force correct port for Azure
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`✅ Server is running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
