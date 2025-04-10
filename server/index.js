@@ -14,6 +14,14 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+app.options("/assess", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.sendStatus(204); // No Content
+});
+
+
 app.post("/assess", async (req, res) => {
   const { profile, answers } = req.body;
 
