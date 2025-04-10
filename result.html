@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assessment Results</title>
+</head>
+<body>
+  <h1>AI-Generated Summary</h1>
+  <pre id="output">Loading...</pre>
+
+  <script>
+    const result = JSON.parse(localStorage.getItem("assessmentResult"));
+    document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+  </script>
+</body>
+</html>
