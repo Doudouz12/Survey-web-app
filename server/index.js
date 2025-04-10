@@ -5,7 +5,21 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = [
+  "https://proud-water-0c6f1f403.6.azurestaticapps.net"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+}));
+
 app.use(bodyParser.json());
 
 app.post("/assess", async (req, res) => {
