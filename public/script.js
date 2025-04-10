@@ -21,7 +21,7 @@ document.getElementById("assessment-form").addEventListener("submit", async (e) 
     }
   };
 
-  const response = await fetch("https://<your-backend-url>/assess", {
+  const response = await fetch("https://tek-assessment-backend-b6dtaef7dggwgze2.francecentral-01.azurewebsites.net/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
