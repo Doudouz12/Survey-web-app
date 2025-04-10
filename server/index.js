@@ -5,23 +5,16 @@ require("dotenv").config();
 
 const app = express();
 
-// 🔒 Force CORS headers for ALL incoming requests
-app.options('*', (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.sendStatus(204);
-});
-
+// ✅ Handle CORS for all routes and all methods
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
   next();
 });
-
-app.use(bodyParser.json());
-
 
 app.use(bodyParser.json());
 
@@ -71,5 +64,6 @@ ${JSON.stringify(answers, null, 2)}
   }
 });
 
+// ✅ This port works with Azure Linux App Services
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT} — CORS v2`));
+app.listen(PORT, () => console.log(`✅ Server is running on port ${PORT}`));
