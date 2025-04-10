@@ -1,24 +1,16 @@
 const express = require("express");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
 
-const allowedOrigins = [
-  "https://proud-water-0c6f1f403.6.azurestaticapps.net"
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  }
-}));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://proud-water-0c6f1f403.6.azurestaticapps.net");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 app.use(bodyParser.json());
 
