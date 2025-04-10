@@ -72,4 +72,4 @@ ${JSON.stringify(answers, null, 2)}
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT} — CORS v2`));
