@@ -1,4 +1,4 @@
-name: Deploy Node.js app to Azure Web App
+name: Deploy Node.js App to Azure Web App
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v2
 
-    - name: Set up Node
+    - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '18'
